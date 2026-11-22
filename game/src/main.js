@@ -118,7 +118,7 @@ function endDuel() {
 
 function showDuelEnd(bonus, perfect) {
   const won = state.winner === 'player';
-  $('duel-art').textContent = won ? '🏆' : '🦉';
+  $('duel-art').innerHTML = won ? '🏆' : '<img class="duel-art-img" src="./assets/avatar-owl.jpg" alt="Sorin">';
   $('duel-title').textContent = won ? 'DUEL WON!' : 'DUEL LOST';
   $('duel-title').classList.toggle('won', won);
   $('duel-line').textContent = won
