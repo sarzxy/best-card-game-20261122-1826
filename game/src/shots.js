@@ -37,6 +37,9 @@ function stagePlay(seed) {
     const clash = state.clash;
     const juicy = clash && (clash.rivalDamage + clash.playerDamage) >= 3 && rivalLean(state) !== null;
     if (state.phase === 'pick' && state.player.hp < 20 && state.rival.hp < 20 && juicy) {
+      // Staging only: bank a full Sun row so the cover frame shows the whole
+      // hand in full colour (unaffordable cards render greyed in real play).
+      state.player.energy = 5;
       return { state, series };
     }
   }

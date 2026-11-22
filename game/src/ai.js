@@ -2,7 +2,7 @@
 // He plays the card that scores best against what you have been doing —
 // he counts the elements you played in the last three clashes and leans
 // into their counter — but he is not a machine: a little noise, a soft
-// spot for finishing blows, and a habit of hiding behind Guard when hurt.
+// spot for finishing blows, and a habit of hiding behind his soaks when hurt.
 //
 // His intention is honestly telegraphed. Before each clash the game asks
 // Sorin what he is *leaning* toward (the element of his most likely pick),
@@ -25,12 +25,19 @@ function scoreCard(state, card, recentPlayerElements) {
     if (ELEMENTS[card.element].beats === el) score += 4 * dial.counter;
     if (ELEMENTS[el].beats === card.element) score -= 3 * dial.counter;
   }
-  // Echo set-ups: repeating a winning element is worth real power.
-  if (card.ability === 'echo' && rival.lastWinElement === card.element) score += 4;
-  if (card.ability === 'surge' && rival.hp < player.hp) score += 4;
-  // Hurt Sorin values Guard and Mend; healthy Sorin saves them.
-  if ((card.ability === 'guard' || card.ability === 'mend') && rival.hp <= 10) score += 5;
-  if (card.ability === 'drain' && rival.hp <= 12) score += 2;
+  // Skill set-ups he can read off the table: a comeback Encore, an Undertow
+  // while behind, a Divebomb while ahead, a banked-Sun Momentum.
+  if (card.skill === 'encore' && rival.lastOutcome === 'lose') score += 5;
+  if (card.skill === 'undertow' && rival.hp < player.hp) score += 5;
+  if (card.skill === 'divebomb' && rival.hp > player.hp) score += 5;
+  if (card.skill === 'momentum') score += Math.min(3, rival.energy);
+  if (card.skill === 'root-memory' && rival.lastPlayedElement === 'grove') score += 4;
+  // Hurt Sorin values his soaks and heals; healthy Sorin saves them.
+  if ((card.skill === 'bulwark' || card.skill === 'reef-wall' || card.skill === 'aegis-charge'
+    || card.skill === 'healing-rain' || card.skill === 'rebirth') && rival.hp <= 10) score += 5;
+  if (card.skill === 'feast-deep' && rival.hp <= 12) score += 2;
+  // A Thunderstomp finisher is never wasted on a healthy duelist.
+  if (card.skill === 'thunderstomp' && player.hp <= 8) score += 4;
   // A finishing blow is never wasted.
   if (card.power >= player.hp + 6 && card.cost <= rival.energy) score += 6;
   // Don't burn the whole sun on a weak card early.

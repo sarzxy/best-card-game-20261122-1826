@@ -1,9 +1,10 @@
 // All drawing: turns game state into DOM. Cards are crisp HTML (never canvas),
 // so names, Powers and costs stay readable from across the room — and in the
-// judge's contact sheet. Art is inline SVG: one bold emblem per element, told
-// apart by colour AND shape, plus a simple dawn-creature drawn from the card.
+// judge's contact sheet. Each card wears its painted portrait (game/assets/)
+// inside an ornate gilded TCG frame; the element emblems are inline SVG, one
+// bold shape per element, told apart by colour AND shape.
 
-import { ABILITY_TEXT } from './cards.js';
+import { SKILLS } from './cards.js';
 import { ELEMENTS, ELEMENT_ORDER, ENERGY_CAP, START_HP } from './config.js';
 import { effectivePower } from './state.js';
 
@@ -21,43 +22,13 @@ export function emblemSVG(element, size = 54) {
     + `<path d="${EMBLEM_PATHS[element]}" fill="${el.color}" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
 }
 
-// ---- creature art: a round dawn-spirit whose ears, crest and cheeks follow
-// the card, so no two cards on the table look alike. Pure decoration. ----
-const CRESTS = [
-  '<path d="M22 20 L16 4 L30 12 Z M74 20 L80 4 L66 12 Z" fill="COLOR"/>', // twin horns
-  '<path d="M48 2 L56 18 L40 18 Z" fill="COLOR"/>', // single spike
-  '<circle cx="26" cy="12" r="7" fill="COLOR"/><circle cx="70" cy="12" r="7" fill="COLOR"/>', // pom ears
-  '<path d="M20 16 Q48 -6 76 16 L70 22 Q48 6 26 22 Z" fill="COLOR"/>', // leaf brow
-];
-const MOUTHS = [
-  '<path d="M40 62 Q48 68 56 62" stroke="INK" stroke-width="3" fill="none" stroke-linecap="round"/>',
-  '<circle cx="48" cy="63" r="4" fill="INK"/>',
-  '<path d="M40 64 L56 64" stroke="INK" stroke-width="3" stroke-linecap="round"/>',
-  '<path d="M41 61 Q48 70 55 61 Q48 65 41 61 Z" fill="INK"/>',
-];
-
-export function creatureSVG(card, size = 96) {
-  const el = ELEMENTS[card.element];
-  let h = 0;
-  for (const ch of card.id) h = (h * 31 + ch.charCodeAt(0)) % 997;
-  const crest = CRESTS[h % CRESTS.length].replaceAll('COLOR', el.color);
-  const mouth = MOUTHS[Math.floor(h / 4) % MOUTHS.length].replaceAll('INK', el.ink);
-  const belly = Math.floor(h / 16) % 2 === 0;
-  return `<svg width="${size}" height="${size}" viewBox="0 0 96 96" aria-hidden="true">`
-    + crest
-    + `<ellipse cx="48" cy="56" rx="33" ry="34" fill="${el.soft}" stroke="${el.color}" stroke-width="4"/>`
-    + (belly ? `<ellipse cx="48" cy="66" rx="18" ry="17" fill="#fffdf6" opacity="0.85"/>` : '')
-    + '<circle cx="36" cy="50" r="5" fill="#33241a"/><circle cx="60" cy="50" r="5" fill="#33241a"/>'
-    + '<circle cx="38" cy="48" r="1.8" fill="#fff"/><circle cx="62" cy="48" r="1.8" fill="#fff"/>'
-    + `<circle cx="27" cy="60" r="5" fill="${el.color}" opacity="0.45"/><circle cx="69" cy="60" r="5" fill="${el.color}" opacity="0.45"/>`
-    + mouth + '</svg>';
-}
-
-// ---- one card, face up ----
+// ---- one card, face up: gilded name banner, painted portrait in an ornate
+// inner frame, then the gold skill text every card carries. ----
 export function cardElement(card, { keyHint = null } = {}) {
   const el = ELEMENTS[card.element];
+  const skill = SKILLS[card.skill];
   const node = document.createElement('div');
-  const rarity = card.power >= 8 ? ' rarity-epic' : (card.ability && card.cost >= 2 ? ' rarity-rare' : '');
+  const rarity = card.power >= 8 ? ' rarity-epic' : (card.cost >= 2 ? ' rarity-rare' : '');
   node.className = `card el-${card.element}${rarity}`;
   node.dataset.cardId = card.id;
   const suns = card.cost === 0
@@ -66,9 +37,10 @@ export function cardElement(card, { keyHint = null } = {}) {
   node.innerHTML =
     (keyHint !== null ? `<span class="key-hint">${keyHint}</span>` : '')
     + `<div class="card-head"><span class="card-name">${card.name}</span><span class="card-cost">${suns}</span></div>`
-    + `<div class="card-art">${creatureSVG(card)}<span class="card-power">${card.power}</span>`
+    + `<div class="card-art"><img class="card-portrait" src="./assets/${card.id}.jpg" alt="${card.name} portrait">`
+    + `<span class="card-power">${card.power}</span>`
     + `<span class="card-el">${emblemSVG(card.element, 13)} ${el.name}</span></div>`
-    + `<div class="card-text">${card.ability ? `<div class="card-ability">${ABILITY_TEXT[card.ability]}</div>` : ''}`
+    + `<div class="card-text"><div class="card-skill"><span class="skill-name">⚡ ${skill.name}</span> · ${skill.text}</div>`
     + `<div class="card-flavor">${card.flavor}</div></div>`;
   return node;
 }

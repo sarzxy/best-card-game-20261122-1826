@@ -29,13 +29,31 @@ export const ADVANTAGE_BONUS = 3;
 // Base bite of every won clash, on top of the Power difference — a won
 // clash always hurts, so duels move and comebacks stay possible.
 export const CLASH_HEAT = 2;
-// A Guard card soaks this much of the damage it would take.
-export const GUARD_SOAK = 4;
-// Ability magnitudes, named so state.js reads like the rules on the title screen.
-export const DRAIN_HEAL = 2;
-export const MEND_HEAL = 3;
-export const SURGE_BONUS = 2;
-export const ECHO_BONUS = 2;
+// Skill magnitudes, named so state.js reads like the gold text on the
+// cards. Every card owns exactly one skill (see SKILLS in cards.js); the
+// three soak skills are the only ones a Sunlance can pierce.
+export const SPARK_BITE_DAMAGE = 1;
+export const ENCORE_BONUS = 3;
+export const REBIRTH_HEAL = 3;
+export const BULWARK_SOAK = 5;
+export const SUNLANCE_BONUS = 1;
+export const ERUPTION_BONUS = 2;
+export const MOMENTUM_CAP = 3;
+export const HEALING_RAIN_HEAL = 3;
+export const REEF_SOAK = 4;
+export const REEF_HEAL = 1;
+export const UNDERTOW_BONUS = 3;
+export const LONGSHOT_BONUS = 2;
+export const PHOTOSYNTHESIS_HEAL = 1;
+export const THORNS_DAMAGE = 2;
+export const ROOT_MEMORY_BONUS = 2;
+export const STATIC_SNAP_BONUS = 1;
+export const VOLATILE_CAP = 3;
+export const DIVEBOMB_BONUS = 3;
+export const AEGIS_SOAK = 3;
+export const CHAIN_CAP = 3;
+export const THUNDERSTOMP_BONUS = 3;
+export const THUNDERSTOMP_THRESHOLD = 8;
 // On an exact power tie both duelists take this much spark damage.
 export const TIE_DAMAGE = 1;
 
