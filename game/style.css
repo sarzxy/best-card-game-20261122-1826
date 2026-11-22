@@ -8,7 +8,8 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
   color: #33241a;
   background:
-    radial-gradient(1100px 480px at 50% -120px, #fff3b0 0%, rgba(255, 243, 176, 0) 60%),
+    radial-gradient(1100px 480px at 50% -120px, rgba(255, 243, 176, .55) 0%, rgba(255, 243, 176, 0) 60%),
+    url('./assets/bg-arena.jpg') center / cover no-repeat,
     linear-gradient(180deg, #7ec8ff 0%, #a8dcff 26%, #ffd9a0 62%, #ffb37e 100%);
   overflow: hidden;
   user-select: none;
@@ -37,7 +38,10 @@ body.shot * { animation: none !important; transition: none !important; }
 #layout { flex: 1; display: flex; gap: 12px; padding: 2px 14px 12px; min-height: 0; }
 #table {
   flex: 1; display: flex; flex-direction: column;
-  background: radial-gradient(700px 300px at 50% 42%, #2fd48c 0%, #17b978 55%, #0ea968 100%);
+  /* The arena scene itself is the table: full-strength art edge-to-edge, no
+     colour wash. Legibility comes from the opaque cards/panels and from
+     localised text halos, never from a flat felt over the painting. */
+  background: url('./assets/bg-arena.jpg') center / cover;
   border: 6px solid #8a4b1d; border-radius: 26px;
   box-shadow: inset 0 0 0 4px #ffd76e, inset 0 10px 40px rgba(255, 255, 255, .35), 0 10px 24px rgba(122, 45, 14, .35);
   padding: 10px 16px 12px;
@@ -64,8 +68,8 @@ body.shot * { animation: none !important; transition: none !important; }
 }
 .rival-portrait { background: #dfe9ff; border-color: #2478d8; }
 .duelist-meta { width: 300px; }
-.duelist-name { font-weight: 900; font-size: 17px; color: #fff; text-shadow: 0 2px 2px rgba(0,0,0,.35); letter-spacing: .5px; }
-.duelist-title { font-weight: 700; font-size: 12.5px; opacity: .9; }
+.duelist-name { font-weight: 900; font-size: 17px; color: #fff; text-shadow: 0 2px 3px rgba(59,26,4,.6), 0 0 10px rgba(59,26,4,.4); letter-spacing: .5px; }
+.duelist-title { font-weight: 700; font-size: 12.5px; opacity: .95; text-shadow: 0 1px 0 rgba(255,248,220,.9), 0 0 9px rgba(255,244,200,.9); }
 .hp-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
 .hp-heart { color: #ff4d6d; font-size: 18px; text-shadow: 0 1px 0 #fff; }
 .hp-bar { position: relative; flex: 1; height: 20px; background: rgba(0,0,0,.35); border-radius: 999px; border: 2px solid #fff; overflow: hidden; }
@@ -75,7 +79,7 @@ body.shot * { animation: none !important; transition: none !important; }
 .hp-text { position: absolute; inset: 0; text-align: center; font-size: 12.5px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.6); line-height: 17px; }
 .energy-row { display: flex; gap: 4px; margin-top: 5px; min-height: 17px; }
 .sun-pip { width: 17px; height: 17px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #fff6c9, #ffc21a 65%, #ff8c1a); border: 1.5px solid #c77400; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
-.sun-pip.spent { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.5); box-shadow: none; }
+.sun-pip.spent { background: rgba(43,32,16,.38); border-color: rgba(255,255,255,.7); box-shadow: none; }
 .rival-hand { margin-left: auto; display: flex; }
 .player-actions { margin-left: auto; }
 .focus-btn { margin: 0; }
@@ -102,7 +106,7 @@ body.shot * { animation: none !important; transition: none !important; }
 }
 #vs-medal.clashed { animation: medal-pop .45s ease; }
 @keyframes medal-pop { 0% { transform: scale(1); } 40% { transform: scale(1.45) rotate(-8deg); } 100% { transform: scale(1); } }
-.arena-banner { min-height: 24px; font-weight: 900; font-size: 17px; color: #fff; text-align: center; text-shadow: 0 2px 3px rgba(0,0,0,.45); }
+.arena-banner { min-height: 24px; font-weight: 900; font-size: 17px; color: #fff; text-align: center; text-shadow: 0 2px 4px rgba(59,26,4,.65), 0 0 12px rgba(59,26,4,.45); }
 .clash-btn {
   font: inherit; font-weight: 900; font-size: 19px; letter-spacing: 1.5px; cursor: pointer;
   color: #fff; background: linear-gradient(180deg, #ff7a59, #e8483f); border: 3px solid #fff;
@@ -111,14 +115,15 @@ body.shot * { animation: none !important; transition: none !important; }
 .clash-btn:hover:not(:disabled) { filter: brightness(1.08); }
 .clash-btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 #a52a22; }
 .clash-btn:disabled { background: #b9c4c9; box-shadow: 0 5px 0 #7e8b91; cursor: default; opacity: .75; }
-.arena-tip { font-size: 12.5px; color: #eafff3; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.arena-tip { font-size: 12.5px; color: #eafff3; text-align: center; text-shadow: 0 1px 3px rgba(59,26,4,.8), 0 0 10px rgba(59,26,4,.65), 0 0 3px rgba(59,26,4,.6); }
 .power-parts { display: flex; flex-direction: column; gap: 3px; align-items: center; }
 .part-chip { background: rgba(255,248,234,.95); border-radius: 999px; padding: 1.5px 10px; font-size: 12px; font-weight: 800; color: #5f130d; }
 .part-chip.total { background: #7a2d0e; color: #ffe9a3; font-size: 13.5px; }
 .arena-empty {
-  width: 150px; height: 208px; border: 3px dashed rgba(255,255,255,.65); border-radius: 14px;
-  display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85);
+  width: 150px; height: 208px; border: 3px dashed rgba(255,255,255,.85); border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
   font-weight: 800; font-size: 13.5px; text-align: center; padding: 8px;
+  text-shadow: 0 1px 3px rgba(59,26,4,.7), 0 0 8px rgba(59,26,4,.5);
 }
 
 /* ---------- cards: an ornate gilded TCG frame — dark-gold rim, engraved
@@ -211,7 +216,23 @@ body.shot * { animation: none !important; transition: none !important; }
 /* ---------- overlays ---------- */
 .overlay {
   position: absolute; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(800px 420px at 50% 30%, rgba(255, 243, 176, .95), rgba(255, 179, 126, .93) 70%), linear-gradient(180deg, #7ec8ff, #ffb37e);
+  background:
+    radial-gradient(900px 520px at 50% 32%, rgba(255, 246, 205, .40), rgba(255, 246, 205, .08) 72%),
+    url('./assets/bg-title.jpg') center / cover,
+    linear-gradient(180deg, #7ec8ff, #ffb37e);
+}
+/* Match end moods: golden triumph for a win, aurora dusk (still bright) for a loss. */
+#end-screen {
+  background:
+    radial-gradient(900px 520px at 50% 32%, rgba(255, 246, 205, .34), rgba(255, 246, 205, .06) 72%),
+    url('./assets/bg-loss.jpg') center / cover,
+    linear-gradient(180deg, #7ec8ff, #ffb37e);
+}
+#end-screen:has(#end-title.won) {
+  background:
+    radial-gradient(900px 520px at 50% 32%, rgba(255, 246, 205, .40), rgba(255, 246, 205, .08) 72%),
+    url('./assets/bg-win.jpg') center / cover,
+    linear-gradient(180deg, #7ec8ff, #ffb37e);
 }
 .overlay.hidden { display: none; }
 .title-inner, .end-inner { text-align: center; width: 1060px; position: relative; }
@@ -233,7 +254,7 @@ body.shot * { animation: none !important; transition: none !important; }
   font-size: 92px; line-height: .92; font-weight: 900; letter-spacing: 3px; color: #e8483f;
   text-shadow: 0 4px 0 #ffe93d, 0 8px 0 rgba(122, 45, 14, .85), 0 14px 28px rgba(0,0,0,.3);
 }
-.tagline { font-size: 19px; font-weight: 800; color: #7a2d0e; margin: 10px 0 14px; }
+.tagline { font-size: 19px; font-weight: 800; color: #7a2d0e; margin: 10px 0 14px; text-shadow: 0 1px 0 rgba(255, 248, 220, .9), 0 0 14px rgba(255, 244, 200, .85); }
 .howto { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; }
 .howto-col {
   width: 240px; background: rgba(255, 253, 246, .92); border: 3px solid #e8a812; border-radius: 16px;
@@ -248,11 +269,11 @@ body.shot * { animation: none !important; transition: none !important; }
 }
 .play-btn:hover { filter: brightness(1.07); }
 .play-btn:active { transform: translateY(5px); box-shadow: 0 1px 0 #0c7a4b; }
-.title-foot { margin-top: 12px; font-size: 12.5px; font-weight: 700; color: #7a2d0e; }
+.title-foot { margin-top: 12px; font-size: 12.5px; font-weight: 700; color: #7a2d0e; text-shadow: 0 1px 0 rgba(255, 248, 220, .9), 0 0 10px rgba(255, 244, 200, .9); }
 .end-art { font-size: 84px; }
 .end-title { font-size: 84px; font-weight: 900; letter-spacing: 4px; color: #e8483f; text-shadow: 0 4px 0 #ffe93d, 0 8px 0 rgba(122,45,14,.85); }
 .end-title.won { color: #17b978; }
-.end-line { font-size: 20px; font-weight: 800; color: #7a2d0e; margin: 8px 0 14px; }
+.end-line { font-size: 20px; font-weight: 800; color: #7a2d0e; margin: 8px 0 14px; text-shadow: 0 1px 0 rgba(255, 248, 220, .9), 0 0 14px rgba(255, 244, 200, .85); }
 .end-stats { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; }
 .end-stats .stat { background: rgba(255,253,246,.94); border: 3px solid #e8a812; border-radius: 14px; padding: 8px 18px; font-weight: 900; font-size: 16px; color: #5f130d; }
 .confetti { position: absolute; width: 12px; height: 18px; z-index: 45; pointer-events: none; animation: confetti-fall 1.8s ease-in forwards; }
@@ -280,7 +301,7 @@ body.shot * { animation: none !important; transition: none !important; }
 
 /* ---------- title menu, difficulty, panels ---------- */
 .difficulty-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 14px; }
-.difficulty-label { font-weight: 900; color: #7a2d0e; font-size: 15px; }
+.difficulty-label { font-weight: 900; color: #7a2d0e; font-size: 15px; text-shadow: 0 1px 0 rgba(255, 248, 220, .9), 0 0 10px rgba(255, 244, 200, .85); }
 .diff-btn {
   font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; padding: 7px 16px;
   border-radius: 999px; border: 3px solid #fff; background: rgba(255, 248, 234, .8); color: #7a2d0e;
