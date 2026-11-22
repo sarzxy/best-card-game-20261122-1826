@@ -65,7 +65,10 @@ body.shot * { animation: none !important; transition: none !important; }
 .portrait {
   width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: 36px; background: #fff8ea; border: 4px solid #ffd76e; box-shadow: 0 3px 0 rgba(0,0,0,.25);
+  overflow: hidden; flex: none;
 }
+.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; }
+.duel-art-img { width: 118px; height: 118px; border-radius: 50%; object-fit: cover; object-position: 50% 32%; border: 4px solid #ffd76e; box-shadow: 0 4px 0 rgba(0,0,0,.25); }
 .rival-portrait { background: #dfe9ff; border-color: #2478d8; }
 .duelist-meta { width: 300px; }
 .duelist-name { font-weight: 900; font-size: 17px; color: #fff; text-shadow: 0 2px 3px rgba(59,26,4,.6), 0 0 10px rgba(59,26,4,.4); letter-spacing: .5px; }
